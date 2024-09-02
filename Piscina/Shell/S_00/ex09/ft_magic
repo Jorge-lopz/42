@@ -1,0 +1,5 @@
+# 41 (The offset to account for)
+# string (the type of the search objective)
+# 42 (The search objective)
+# ... (The message to show if matches)
+41  string  42  42 file.

@@ -1,0 +1,6 @@
+#Uses '-name' to filter by the file names
+#These then tested for two GLOB patterns using the '-o' (OR) operator
+#The matching results are printed and then deleted
+
+find . -type f \( -name '*~' -o -name '#*#' \) -print -delete
+  
