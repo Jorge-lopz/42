@@ -1,0 +1,16 @@
+Aff_y
+Odd
+Ft_strcmp
+Count_len
+Ft_atoi
+First_word
+Ft_putnbr
+Aff_first_param
+Inter
+Count_words
+Ft_rrange
+Ft_split (6:12h remain when starting)
+Sort_list (4:50h)
+Count_alpha (4:00h)
+Ord_alphlang (2:35h)
+Count_island (1:40h)
