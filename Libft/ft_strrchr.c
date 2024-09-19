@@ -1,35 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcmp.c                                        :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jorlopez <jorlopez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/18 00:47:32 by jorlopez          #+#    #+#             */
-/*   Updated: 2024/09/19 20:04:08 by jorlopez         ###   ########.fr       */
+/*   Created: 2024/09/19 20:12:22 by jorlopez          #+#    #+#             */
+/*   Updated: 2024/09/19 20:16:23 by jorlopez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_memcmp(const void *dest, const void *str, int n)
+char	*strrchr(const char *s, int c)
 {
-	int				i;
-	int				diff;
-	unsigned char	*str_copy;
-	unsigned char	*dest_copy;
-
-	dest_copy = (unsigned char *)dest;
-	str_copy = (unsigned char *)str;
-	i = 0;
-	diff = 0;
-	if (n--)
+	while (*s)
 	{
-		while (n)
-		{
-			if (*dest_copy != *str_copy)
-				return (*dest_copy - *str_copy);
-			dest_copy++;
-			str_copy++;
-		}
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
 	}
+	if (*s == (char)c)
+		return ((char *)s);
 	return (0);
 }
