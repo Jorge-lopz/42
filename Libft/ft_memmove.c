@@ -10,12 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-void	*memmove(void *dest, const void *src, int n)
+void	*ft_memmove(void *dest, const void *src, int n)
 {
 	unsigned const char	*src_copy;
 	unsigned char		*dest_copy;
 	unsigned int		i;
 
+	src_copy = (unsigned const char *) src;
+	dest_copy = (unsigned char *) dest;
 	i = 0;
 	while (src_copy[i] != '\0' && i < n)
 	{

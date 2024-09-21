@@ -17,7 +17,7 @@ int	ft_strlen(const char *str)
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (str && str[i])
 		i++;
 	return (i);
 }
@@ -30,7 +30,7 @@ char	*strnstr(const char *big, const char *little, size_t len)
 
 	i = 0;
 	little_len = ft_strlen(little);
-	if (!*little)
+	if (!little)
 		return ((char *)big);
 	while (big[i] && i < len)
 	{
@@ -44,10 +44,4 @@ char	*strnstr(const char *big, const char *little, size_t len)
 		i++;
 	}
 	return (0);
-}
-#include <stdio.h>
-
-int	main(void)
-{
-	printf("%s\n", strnstr("hola", NULL, 5));
 }
