@@ -10,37 +10,32 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <aio.h>
+#include "libft.h"
 
-int	ft_strlen(const char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str && str[i])
-		i++;
-	return (i);
-}
-
-char	*strnstr(const char *big, const char *little, size_t len)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
 	size_t	i;
 	size_t	j;
-	size_t	little_len;
+	size_t	len_little;
+	char	*big_copy;
+	char	*little_copy;
 
+	big_copy = (char *)big;
+	little_copy = (char *)little;
+	len_little = ft_strlen(little_copy);
 	i = 0;
-	little_len = ft_strlen(little);
-	if (!little)
-		return ((char *)big);
-	while (big[i] && i < len)
+	if (len_little == 0)
+		return (big_copy);
+	while (big_copy[i] && i < len)
 	{
 		j = 0;
-		while (big[i + j] == little[j] && little[j] && i + j < len)
+		while (big_copy[i + j] == little_copy[j] && i + j < len
+			&& j < len_little)
 		{
 			j++;
-			if (j == little_len)
-				return ((char *)&big[i]);
 		}
+		if (j == len_little)
+			return (&big_copy[i]);
 		i++;
 	}
 	return (0);

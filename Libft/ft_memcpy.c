@@ -10,18 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-void	*ft_memcpy(void *dest, const void *src, int n)
+#include "libft.h"
+
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
 	unsigned char	*dest_copy;
 	unsigned char	*src_copy;
-	int				i;
+	size_t			i;
 
+	if (!dest && !src)
+		return (NULL);
 	dest_copy = (unsigned char *)dest;
 	src_copy = (unsigned char *)src;
-	if (dest_copy == src || !n)
-		return (dest);
 	i = 0;
-	while (n > i)
+	while (i < n)
 	{
 		dest_copy[i] = src_copy[i];
 		i++;

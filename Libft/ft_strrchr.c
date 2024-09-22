@@ -10,15 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*strrchr(const char *s, int c)
+char	*ft_strrchr(const char *s, int c)
 {
+	char	*last_occurrence;
+
+	last_occurrence = 0;
 	while (*s)
 	{
 		if (*s == (char)c)
-			return ((char *)s);
+			last_occurrence = (char *)s;
 		s++;
 	}
-	if (*s == (char)c)
+	if ((char)c == '\0')
 		return ((char *)s);
-	return (0);
+	return (last_occurrence);
 }

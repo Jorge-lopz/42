@@ -10,18 +10,22 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-void	*ft_memchr(const void *s, int c, int n)
-{
-	unsigned char	*str;
-	int				i;
+#include "libft.h"
 
-	str = (unsigned char *)s;
+void	*ft_memchr(const void *s, int c, size_t n)
+{
+	size_t			i;
+	unsigned char	*s_copy;
+	unsigned char	c_copy;
+
+	s_copy = (unsigned char *)s;
+	c_copy = (unsigned char)c;
 	i = 0;
 	while (i < n)
 	{
-		if (str[i] == (unsigned char)c)
-			return ((void *)&str[i]);
+		if (s_copy[i] == c_copy)
+			return ((void *)&s_copy[i]);
 		i++;
 	}
-	return (0);
+	return (NULL);
 }

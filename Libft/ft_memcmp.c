@@ -10,26 +10,22 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_memcmp(const void *dest, const void *str, int n)
+#include "libft.h"
+
+int	ft_memcmp(const void *dest, const void *str, size_t n)
 {
-	int				i;
-	int				diff;
-	unsigned char	*str_copy;
+	size_t			i;
 	unsigned char	*dest_copy;
+	unsigned char	*str_copy;
 
 	dest_copy = (unsigned char *)dest;
 	str_copy = (unsigned char *)str;
 	i = 0;
-	diff = 0;
-	if (n--)
+	while (i < n)
 	{
-		while (n)
-		{
-			if (*dest_copy != *str_copy)
-				return (*dest_copy - *str_copy);
-			dest_copy++;
-			str_copy++;
-		}
+		if (dest_copy[i] != str_copy[i])
+			return (dest_copy[i] - str_copy[i]);
+		i++;
 	}
 	return (0);
 }

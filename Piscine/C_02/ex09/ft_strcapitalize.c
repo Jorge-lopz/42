@@ -27,8 +27,7 @@ char	*ft_strcapitalize(char *str)
 			if (*str >= 'a' && *str <= 'z')
 				*str = *str - 32;
 		}
-		if (!((*str >= '0' && *str <= '9')
-				|| (*str >= 'A' && *str <= 'Z')
+		if (!((*str >= '0' && *str <= '9') || (*str >= 'A' && *str <= 'Z')
 				|| (*str >= 'a' && *str <= 'z')))
 		{
 			next_cap = 1;

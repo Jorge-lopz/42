@@ -5,19 +5,19 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jorlopez <jorlopez@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/18 00:42:44 by jorlopez          #+#    #+#             */
-/*   Updated: 2024/09/18 00:42:44 by jorlopez         ###   ########.fr       */
+/*   Created: 2024/09/22 12:06:55 by jorlopez          #+#    #+#             */
+/*   Updated: 2024/09/22 12:06:55 by jorlopez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-unsigned int	ft_strlcat(char *dest, char *src, unsigned int size)
+size_t	ft_strlcat(char *dest, const char *src, size_t size)
 {
-	unsigned int	i;
-	unsigned int	j;
-	unsigned int	src_l;
-	unsigned int	dest_l;
+	size_t	i;
+	size_t	j;
+	size_t	src_l;
+	size_t	dest_l;
 
 	i = 0;
 	src_l = ft_strlen(src);
