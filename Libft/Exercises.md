@@ -18,9 +18,9 @@
 - [x] memchr
 - [x] memcmp
 - [x] strnstr
-- [ ] atoi
+- [x] atoi
 
 # Malloc
 
-- [ ] calloc
-- [ ] strdup
+- [x] calloc
+- [x] strdup
