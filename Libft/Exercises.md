@@ -26,3 +26,15 @@
 
 - [x] calloc
 - [x] strdup
+
+# ADICIONALES
+
+- [x] substr
+- [x] strjoin
+- [ ] strtrim
+- [ ] split
+- [ ] itoa
+- [ ] strmapi
+- [ ] striteri
+- [ ] putchar_fd
+- [ ]

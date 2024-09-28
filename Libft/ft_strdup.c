@@ -24,7 +24,7 @@ char	*ft_strdup(const char *str)
 		i++;
 	res = (char *)malloc((i + 1) * 1);
 	if (res == NULL)
-		return (NULL);
+		return (0);
 	while (str[j])
 	{
 		res[j] = str[j];

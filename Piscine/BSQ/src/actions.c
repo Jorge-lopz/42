@@ -108,8 +108,8 @@ void	print_bsq(int max_square, int max_ij[2], int rows, int cols)
 		j = 0;
 		while (j < cols)
 		{
-			if (i >= max_ij[0] && i < (max_ij[0] + max_square)
-				&& j >= max_ij[1] && j < (max_ij[1] + max_square))
+			if (i >= max_ij[0] && i < (max_ij[0] + max_square) && j >= max_ij[1]
+				&& j < (max_ij[1] + max_square))
 				write(1, &g_result, 1);
 			else
 				write(1, &g_map[i][j], 1);
