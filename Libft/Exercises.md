@@ -37,18 +37,18 @@
 - [x] strmapi
 - [x] striteri
 - [x] putchar_fd
-- [ ] putstr_fd
-- [ ] putendl_fd
-- [ ] putnbr_fd
+- [x] putstr_fd
+- [x] putendl_fd
+- [x] putnbr_fd
 
-# BONUS
+# BONUS (Linked lists)
 
-- [ ]
-- [ ]
-- [ ]
-- [ ]
-- [ ]
-- [ ]
-- [ ]
-- [ ]
-- [ ]
+- [x] lstnew
+- [x] lstadd_front
+- [x] lstsize
+- [x] lstlast
+- [x] lstadd_back
+- [x] lstdelone
+- [x] lstclear
+- [x] lstiter
+- [x] lstmap
