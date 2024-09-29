@@ -21,14 +21,14 @@ char	*ft_strtrim(char const *s1, char const *set)
 	if (!s1 || !set)
 		return (NULL);
 	start = 0;
-	end = ft_strlen(s1) - 1;
-	while (ft_strchr(set, s1[start]) && s1[start])
+	end = ft_strlen(s1);
+	while (s1[start] && ft_strchr(set, s1[start]))
 		start++;
-	while (ft_strchr(set, s1[end]) && s1[end])
+	while (end > start && ft_strchr(set, s1[end - 1]))
 		end--;
-	str = (char *)malloc(sizeof(char) * (end - start + 2));
+	str = (char *)malloc(sizeof(char) * (end - start + 1));
 	if (!str)
-		return (0);
-	ft_strlcpy(str, &s1[start], end - start + 2);
+		return (NULL);
+	ft_strlcpy(str, &s1[start], end - start + 1);
 	return (str);
 }

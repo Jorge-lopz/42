@@ -31,10 +31,24 @@
 
 - [x] substr
 - [x] strjoin
-- [ ] strtrim
-- [ ] split
-- [ ] itoa
-- [ ] strmapi
-- [ ] striteri
-- [ ] putchar_fd
+- [x] strtrim
+- [x] split
+- [x] itoa
+- [x] strmapi
+- [x] striteri
+- [x] putchar_fd
+- [ ] putstr_fd
+- [ ] putendl_fd
+- [ ] putnbr_fd
+
+# BONUS
+
+- [ ]
+- [ ]
+- [ ]
+- [ ]
+- [ ]
+- [ ]
+- [ ]
+- [ ]
 - [ ]
