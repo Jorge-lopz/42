@@ -19,17 +19,17 @@ static int	ft_type(const char type, va_list args)
 	count = 0;
 	if (type == 'c')
 		count += (char)ft_putchr(va_arg(args, int));
-	if (type == 's')
+	else if (type == 's')
 		count += ft_putstr(va_arg(args, char *));
-	if (type == 'd' || type == 'i')
+	else if (type == 'd' || type == 'i')
 		count += ft_putnbr(va_arg(args, int));
-	if (type == 'p')
+	else if (type == 'p')
 		count += ft_printptr(va_arg(args, void *));
-	if (type == 'u')
+	else if (type == 'u')
 		count += ft_putnbr_u(va_arg(args, unsigned int));
-	if (type == 'X' || type == 'x')
+	else if (type == 'X' || type == 'x')
 		count += (char)ft_printhex(va_arg(args, int), type);
-	if (type == '%')
+	else if (type == '%')
 		return (write(1, "%", 1));
 	return (count);
 }
