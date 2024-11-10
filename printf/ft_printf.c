@@ -11,11 +11,71 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "libft/libft.h"
-#include <stdarg.h>
 
-int	ft_printf(const char *, ...)
+int	ft_printf(const char *string, ...)
 {
+	int		count;
 	va_list	args;
-	int		i;
+
+	count = 0;
+	va_start(args, string);
+	while (string++)
+	{
+		if (*string == '%')
+		{
+			string++;
+			count += ft_type(*string, args);
+		}
+		else
+			count += ft_putchr(*string);
+		string++;
+	}
+	va_end(args);
+	if (count < 0)
+		return (-1);
+	return (count);
+}
+
+int	ft_putchr(char c)
+{
+	return (write(1, &c, 1));
+}
+
+int	ft_putstr(char *str)
+{
+	int	count;
+
+	count = 0;
+	if (str == NULL)
+		return (write(1, "(null)", 6));
+	while (str[count])
+	{
+		ft_putchr(str[count]);
+		count++;
+	}
+	if (count < 0)
+		return (-1);
+	return (count);
+}
+
+int	ft_type(const char type, va_list args)
+{
+	int	count;
+
+	count = 0;
+	if (type == 'c')
+		count += (char)ft_putchr(va_arg(args, int));
+	if (type == 's')
+		count += ft_putstr(va_arg(args, char *));
+	if (type == 'd' || type == 'i')
+		count += ft_putnbr(va_arg(args, int));
+	if (type == 'p')
+		count += ft_put_p(va_arg(args, void *));
+	if (type == 'u')
+		count += ft_putnbr_u(va_arg(args, unsigned int));
+	if (type == 'X' || type == 'x')
+		count += (char)ft_put_x(va_arg(args, int), type);
+	if (type == '%')
+		return (write(1, "%", 1));
+	return (count);
 }

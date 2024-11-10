@@ -5,10 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jorlopez <jorlopez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/08 14:24:33 by jorlopez          #+#    #+#             */
-/*   Updated: 2024/11/08 14:24:33 by jorlopez         ###   ########.fr       */
+/*   Created: 2024/11/10 10:51:19 by jorlopez          #+#    #+#             */
+/*   Updated: 2024/11/10 10:51:19 by jorlopez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "ft_printf.h"
 
 int	main(int argc, char const *argv[])
 {
