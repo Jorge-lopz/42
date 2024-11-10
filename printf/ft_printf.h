@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdarg.h>
+#include <stdint.h>
 #include <unistd.h>
 
 int	ft_printf(const char *format, ...);

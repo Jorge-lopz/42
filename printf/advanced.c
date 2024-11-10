@@ -6,7 +6,7 @@
 /*   By: jorlopez <jorlopez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 11:34:01 by jorlopez          #+#    #+#             */
-/*   Updated: 2024/11/10 14:31:58 by jorlopez         ###   ########.fr       */
+/*   Updated: 2024/11/10 15:20:08 by jorlopez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 int	ft_printptr(void *ptr)
 {
-	unsigned long long	ptr_long;
-	int					count;
+	uintptr_t	ptr_long;
+	int			count;
 
 	count = 0;
 	if (ptr == NULL)
 		return (write(1, "(nil)", 5));
 	count += ft_putstr("0x");
-	ptr_long = (unsigned long long)ptr;
+	ptr_long = (uintptr_t)ptr;
 	count += ft_base16(ptr_long, "0123456789abcdef");
 	return (count);
 }
