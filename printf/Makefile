@@ -14,7 +14,7 @@ LIB = ar rcs
 RM = rm -f
 
 NAME = libftprintf.a
-SRCS = ft_printf.c ft_utils.c
+SRCS = ft_printf.c basic.c advanced.c
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
