@@ -10,7 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int	main(int argc, char const *argv[])
+#include "get_next_line.h"
+#include <stdio.h>
+
+int	main(void)
 {
+	printf(get_next_line("text.txt"));
 	return (0);
 }
