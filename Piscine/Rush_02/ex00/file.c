@@ -10,18 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <fcntl.h>
-#include <unistd.h>
 #include "rush.h"
-
+#include <fcntl.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 int	open_file(char *path)
 {
 	int	file_id;
-	
-	file_id = open(path, O_RDONLY);	
+
+	file_id = open(path, O_RDONLY);
 	if (file_id == -1)
 	{
 		putstr("Dict Error\n");
@@ -31,11 +30,11 @@ int	open_file(char *path)
 
 char	*read_file(int file_id)
 {
-	int	read_bytes;
-	int	total_bytes;
+	int		read_bytes;
+	int		total_bytes;
 	char	*temp[1];
 	char	*g_file_content;
-	
+
 	read_bytes = 1;
 	total_bytes = 0;
 	while (read_bytes > 0)
@@ -67,6 +66,5 @@ void	print_num(char *num)
 {
 	if ()
 	{
-	
 	}
 }

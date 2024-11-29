@@ -10,17 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
 #include "rush.h"
-
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 char	*g_file_content;
 
 int	main(int argc, char *argv[])
 {
-	int	file_id;
+	int		file_id;
 	char	*num;
 	char	*path;
 
@@ -29,24 +28,20 @@ int	main(int argc, char *argv[])
 		putstr("Error\n");
 		return (1);
 	}
-	
-	//Check valid number
+	// Check valid number
 	num = argv[1]
-	//Check valid dictionary
-	path = "numbers.dict";
+		// Check valid dictionary
+		path = "numbers.dict";
 	if (argc == 3)
 	{
 		path = argv[1];
 		num = argv[2];
 	}
-	
 	file_id = open_file(path);
 	if (file_id == -1)
 		return (1);
-	
 	g_file_content = read_file(file_id);
 	if (g_file_content == NULL)
 		return (1);
-		
 	print_num(num);
 }

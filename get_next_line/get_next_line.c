@@ -12,25 +12,32 @@
 
 #include "get_next_line.h"
 
-static	ft_get_line(int fd, char *buffer);
+static char	*ft_line(int fd, char *buffer);
 
 char	*get_next_line(int fd)
 {
 	static char	*buffer;
 
-	if (fd < 0 || BUFFER_SIZE < 1 || read(fd, 0, 0) < 0)
+	if (!buffer)
+		buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buffer || fd < 0 || BUFFER_SIZE < 1 || read(fd, 0, 0) < 0)
 		return (0);
-	buffer = ft_get_line(fd, buffer);
-	// Print the
+	buffer = ft_line(fd, buffer);
+	return (buffer);
 }
 
-static	ft_get_line(int fd, char *buffer)
+static char	*ft_line(int fd, char *buffer)
 {
-	while (!ft_strchr(buffer, '\n'))
+	int	bytes_read;
+
+	while (ft_strchr(buffer, '\n') == NULL)
 	{
-		if (read(fd, buffer, BUFFER_SIZE) < 0)
-			return (0);
-		buffer[BUFFER_SIZE] = '\0';
+		bytes_read = read(fd, buffer, 42);
+		if (bytes_read == 0)
+		{
+			buffer[BUFFER_SIZE] = '\0';
+			break ;
+		}
 	}
 	return (buffer);
 }
