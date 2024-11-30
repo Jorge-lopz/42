@@ -17,7 +17,7 @@ int	main(void)
 {
 	int	fd;
 
-	fd = open("text.txt", O_RDONLY);
+	fd = open("empty.txt", O_RDONLY);
 	printf("%s\n", get_next_line(fd));
 	return (0);
 }
