@@ -17,26 +17,33 @@ static char	*ft_read(int fd, char *buffer);
 char	*get_next_line(int fd)
 {
 	static char	*buffer;
-	char		*temp;
+	char		*line;
 	int			end;
+	int			i;
 
 	if (!buffer || fd < 0 || BUFFER_SIZE < 1 || read(fd, 0, 0) < 0)
 		return (0);
-	temp = ft_read(fd, buffer); // Read at least once
-	buffer = ft_strjoin(buffer, temp);
-	end = temp[ft_strlen(temp) - 1] == '\0';
-	free(temp);
-	temp = NULL;
+	line = NULL;
+	end = 0;
 	while (!end)
 	{
-		temp = ft_read(fd, buffer);
-		buffer = ft_strjoin(buffer, temp);
-		printf("BUFFER: %s\n", buffer);
-		end = temp[ft_strlen(temp) - 1] == '\0';
-		free(temp);
-		temp = NULL;
+		if (!buffer) // Read at least once if the buffer is empty
+			buffer = ft_read(fd, buffer);
+		// Find the position of the newline character
+		i = 0;
+		while (buffer[i] && buffer[i] != '\n')
+			i++;
+		// Allocate memory for the line
+		line = ft_substr(buffer, 0, i + (buffer[i] == '\n' ? 1 : 0));
+		if (buffer[i] == '\n')
+			end = 1;
+		// If there's more data to read after the newline, move the buffer
+		if (end)
+			buffer = ft_strdup(&buffer[i + 1]);
+		else
+			buffer = ft_read(fd, buffer);
 	}
-	return (buffer);
+	return (line);
 }
 
 static char	*ft_read(int fd, char *buffer)
@@ -51,9 +58,11 @@ static char	*ft_read(int fd, char *buffer)
 	if (bytes_read <= 0)
 	{
 		free(temp);
-		return (buffer); // TODO
+		return (buffer); // Return remaining buffer or NULL
 	}
-	else if (bytes_read < BUFFER_SIZE)
+	else
+	{
 		temp[bytes_read] = '\0';
-	return (temp);
+		return (temp);
+	}
 }
