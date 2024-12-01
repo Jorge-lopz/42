@@ -31,16 +31,18 @@ char	*get_next_line(int fd)
 	if (!buffer)
 		return (NULL);
 	stash = stash_filling(fd, stash, buffer);
-	if (!stash || *stash == 0) // Check if stash is empty after reading
+	if (!stash || *stash == 0)
 	{
-		free(stash);  // Free the stash if it’s empty
-		stash = NULL; // Reset the stash to NULL
-		free(buffer); // Free the buffer
+		free(stash);
+		stash = NULL;
+		free(buffer);
+		buffer = NULL;
 		return (NULL);
 	}
 	line = extract_line(stash, line);
 	stash = extract_new_stash(stash);
-	free(buffer); // Free the buffer after use
+	free(buffer);
+	free(stash);
 	return (line);
 }
 
@@ -57,7 +59,7 @@ char	*stash_filling(int fd, char *stash, char *buffer)
 		if (nbytes == -1)
 		{
 			free(buffer);
-			free(stash); // Free stash in case of an error
+			free(stash);
 			return (NULL);
 		}
 		buffer[nbytes] = 0;
@@ -85,7 +87,7 @@ char	*extract_new_stash(char *stash)
 	new_stash = malloc((ft_strlen(stash) - len + 1) * sizeof(char));
 	if (!new_stash)
 	{
-		free(stash); // Free stash if memory allocation fails
+		free(stash);
 		return (NULL);
 	}
 	while (stash[len + i])
@@ -114,7 +116,7 @@ char	*extract_line(char *stash, char *line)
 	line = malloc((len + 1) * sizeof(char));
 	if (!line)
 	{
-		free(stash); // Free stash in case of allocation failure
+		free(stash);
 		return (NULL);
 	}
 	while (i < len)
