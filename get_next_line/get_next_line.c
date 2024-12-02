@@ -66,48 +66,47 @@ static int	read_to_buffer(int fd, char **buffer)
 	return (1);
 }
 
+static char	*end(char **buffer)
+{
+	char	*line;
+
+	if (*buffer && **buffer)
+	{
+		line = extract_line(buffer, NULL);
+		free(*buffer);
+		*buffer = NULL;
+		return (line);
+	}
+	free(*buffer);
+	*buffer = NULL;
+	return (NULL);
+}
+
 char	*get_next_line(int fd)
 {
-	static char *buffer;
-	char *newline;
-	int read_status;
-	char *line;
+	static char	*buffer;
+	char		*newline;
+	int			read_status;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-
 	if (!buffer)
-		buffer = ft_strdup(""); // Initialize buffer if it's NULL
+		buffer = ft_strdup("");
 	if (!buffer)
 		return (NULL);
-
 	while (1)
 	{
-		newline = ft_strchr(buffer, '\n'); // Check if newline exists
+		newline = ft_strchr(buffer, '\n');
 		if (newline)
 			return (extract_line(&buffer, newline));
-				// Return line if newline is found
-
-		read_status = read_to_buffer(fd, &buffer); // Read data into buffer
-		if (read_status < 0)                       // Handle read error
+		read_status = read_to_buffer(fd, &buffer);
+		if (read_status < 0)
 		{
 			free(buffer);
 			buffer = NULL;
 			return (NULL);
 		}
-
-		if (read_status == 0) // End of file or empty file
-		{
-			if (buffer && *buffer) // If buffer has data, return it
-			{
-				line = extract_line(&buffer, NULL);
-				free(buffer); // Free buffer after line is returned
-				buffer = NULL;
-				return (line);
-			}
-			free(buffer); // Free buffer if it's empty at EOF
-			buffer = NULL;
-			return (NULL); // Return NULL when no data left
-		}
+		if (read_status == 0)
+			return (end(&buffer));
 	}
 }
