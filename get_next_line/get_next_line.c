@@ -20,14 +20,18 @@ static char	*extract_line(char **buffer, char *newline)
 	if (newline)
 	{
 		line = ft_substr(*buffer, 0, newline - *buffer + 1);
+		if (!line)
+			return (NULL);
 		temp = ft_strdup(newline + 1);
-		free(*buffer); // Free old buffer after the new one is assigned
+		if (!temp)
+			return (NULL);
+		free(*buffer);
 		*buffer = temp;
 	}
 	else
 	{
 		line = ft_strdup(*buffer);
-		free(*buffer); // Free the buffer if no newline is found
+		free(*buffer);
 		*buffer = NULL;
 	}
 	return (line);
@@ -45,15 +49,19 @@ static int	read_to_buffer(int fd, char **buffer)
 	bytes_read = read(fd, read_buf, BUFFER_SIZE);
 	if (bytes_read <= 0)
 	{
-		free(read_buf); // Free read_buf if no data is read
+		free(read_buf);
 		return (bytes_read);
 	}
 	read_buf[bytes_read] = '\0';
 	temp = ft_strjoin(*buffer, read_buf);
-	free(read_buf); // Free read_buf after using it
+	free(read_buf);
 	if (!temp)
+	{
+		free(*buffer);
+		*buffer = NULL;
 		return (-1);
-	free(*buffer); // Free the old buffer before assigning the new one
+	}
+	free(*buffer);
 	*buffer = temp;
 	return (1);
 }
@@ -63,24 +71,38 @@ char	*get_next_line(int fd)
 	static char	*buffer;
 	char		*newline;
 	int			read_status;
+	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (!buffer)
-		buffer = ft_strdup(""); // Initialize the buffer on first call
-	newline = ft_strchr(buffer, '\n');
-	while (newline == NULL)
+		buffer = ft_strdup("");
+	if (!buffer)
+		return (NULL);
+	while (1)
 	{
+		newline = ft_strchr(buffer, '\n');
+		if (newline)
+			return (extract_line(&buffer, newline));
 		read_status = read_to_buffer(fd, &buffer);
-		if (read_status <= 0)
+		if (read_status < 0)
+		{
+			free(buffer); // Free on read error
+			buffer = NULL;
+			return (NULL);
+		}
+		if (read_status == 0)
 		{
 			if (buffer && *buffer)
-				return (extract_line(&buffer, NULL));
-			// Return remaining content
+			{
+				line = extract_line(&buffer, NULL);
+				free(buffer);
+				buffer = NULL;
+				return (line);
+			}
+			free(buffer);
+			buffer = NULL;
 			return (NULL);
-			// No data read and buffer is empty
 		}
-		newline = ft_strchr(buffer, '\n');
 	}
-	return (extract_line(&buffer, newline));
 }
