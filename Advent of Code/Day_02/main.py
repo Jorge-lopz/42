@@ -42,10 +42,10 @@ for row in rows:
 
     # Check if removing one record makes the report safe
     for i in range(len(row)):
-        modified_row = row[:i] + row[i + 1:]
+        m_row = row[:i] + row[i + 1:]
         if (
-                (modified_row == sorted(modified_row) or modified_row == sorted(modified_row, reverse=True)) and
-                all(1 <= abs(modified_row[j] - modified_row[j + 1]) <= 3 for j in range(len(modified_row) - 1))
+                (m_row == sorted(m_row) or m_row == sorted(m_row, reverse=True)) and
+                all(1 <= abs(m_row[j] - m_row[j + 1]) <= 3 for j in range(len(m_row) - 1))
         ):
             safe_reports += 1
             break
