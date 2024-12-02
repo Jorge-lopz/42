@@ -6,124 +6,81 @@
 /*   By: jorlopez <jorlopez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 20:38:55 by jorlopez          #+#    #+#             */
-/*   Updated: 2024/11/13 20:38:55 by jorlopez         ###   ########.fr       */
+/*   Updated: 2024/12/02 18:02:01 by jorlopez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+static char	*extract_line(char **buffer, char *newline)
+{
+	char	*line;
+	char	*temp;
+
+	if (newline)
+	{
+		line = ft_substr(*buffer, 0, newline - *buffer + 1);
+		temp = ft_strdup(newline + 1);
+		free(*buffer); // Free old buffer after the new one is assigned
+		*buffer = temp;
+	}
+	else
+	{
+		line = ft_strdup(*buffer);
+		free(*buffer); // Free the buffer if no newline is found
+		*buffer = NULL;
+	}
+	return (line);
+}
+
+static int	read_to_buffer(int fd, char **buffer)
+{
+	char	*temp;
+	char	*read_buf;
+	ssize_t	bytes_read;
+
+	read_buf = malloc(BUFFER_SIZE + 1);
+	if (!read_buf)
+		return (-1);
+	bytes_read = read(fd, read_buf, BUFFER_SIZE);
+	if (bytes_read <= 0)
+	{
+		free(read_buf); // Free read_buf if no data is read
+		return (bytes_read);
+	}
+	read_buf[bytes_read] = '\0';
+	temp = ft_strjoin(*buffer, read_buf);
+	free(read_buf); // Free read_buf after using it
+	if (!temp)
+		return (-1);
+	free(*buffer); // Free the old buffer before assigning the new one
+	*buffer = temp;
+	return (1);
+}
+
 char	*get_next_line(int fd)
 {
-	static char	*stash;
-	char		*line;
-	char		*buffer;
+	static char	*buffer;
+	char		*newline;
+	int			read_status;
 
-	line = NULL;
-	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-	{
-		free(stash);
-		free(buffer);
-		stash = NULL;
-		buffer = NULL;
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	}
 	if (!buffer)
-		return (NULL);
-	stash = stash_filling(fd, stash, buffer);
-	if (!stash || *stash == 0)
+		buffer = ft_strdup(""); // Initialize the buffer on first call
+	newline = ft_strchr(buffer, '\n');
+	while (newline == NULL)
 	{
-		free(stash);
-		stash = NULL;
-		free(buffer);
-		buffer = NULL;
-		return (NULL);
-	}
-	line = extract_line(stash, line);
-	stash = extract_new_stash(stash);
-	free(buffer);
-	free(stash);
-	return (line);
-}
-
-char	*stash_filling(int fd, char *stash, char *buffer)
-{
-	ssize_t	nbytes;
-
-	nbytes = 1;
-	if (!stash)
-		stash = ft_strdup("");
-	while (nbytes > 0)
-	{
-		nbytes = read(fd, buffer, BUFFER_SIZE);
-		if (nbytes == -1)
+		read_status = read_to_buffer(fd, &buffer);
+		if (read_status <= 0)
 		{
-			free(buffer);
-			free(stash);
+			if (buffer && *buffer)
+				return (extract_line(&buffer, NULL));
+			// Return remaining content
 			return (NULL);
+			// No data read and buffer is empty
 		}
-		buffer[nbytes] = 0;
-		stash = ft_strjoin(stash, buffer);
-		if (ft_strchr(buffer, '\n'))
-			break ;
+		newline = ft_strchr(buffer, '\n');
 	}
-	return (stash);
-}
-
-char	*extract_new_stash(char *stash)
-{
-	int		len;
-	int		i;
-	char	*new_stash;
-
-	len = 0;
-	i = 0;
-	if (!stash)
-		return (NULL);
-	while (stash[len] != '\n' && stash[len])
-		len++;
-	if (stash[len] == '\n')
-		len++;
-	new_stash = malloc((ft_strlen(stash) - len + 1) * sizeof(char));
-	if (!new_stash)
-	{
-		free(stash);
-		return (NULL);
-	}
-	while (stash[len + i])
-	{
-		new_stash[i] = stash[len + i];
-		i++;
-	}
-	free(stash);
-	new_stash[i] = 0;
-	return (new_stash);
-}
-
-char	*extract_line(char *stash, char *line)
-{
-	int	len;
-	int	i;
-
-	len = 0;
-	i = 0;
-	if (!stash)
-		return (NULL);
-	while (stash[len] != '\n' && stash[len])
-		len++;
-	if (stash[len] == '\n')
-		len++;
-	line = malloc((len + 1) * sizeof(char));
-	if (!line)
-	{
-		free(stash);
-		return (NULL);
-	}
-	while (i < len)
-	{
-		line[i] = stash[i];
-		i++;
-	}
-	line[i] = 0;
-	return (line);
+	return (extract_line(&buffer, newline));
 }
