@@ -10,7 +10,8 @@
 #                                                                             #
 # --------------------------------------------------------------------------- #
 
-import re
+# IMPORTS
+import re  # -> Regular expressions
 
 mul_pattern = r"mul\((\d{1,3}),(\d{1,3})\)"
 do_dont_pattern = r"(do\(\)|don't\(\))"
