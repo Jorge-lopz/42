@@ -10,15 +10,14 @@
 #                                                                             #
 # --------------------------------------------------------------------------- #
 
-memory: [[str]]
-
 with open('input.txt', 'r') as file:
-    memory = [list(line.strip()) for line in file.readlines()]
+    memory: [[str]] = [list(line.strip()) for line in file.readlines()]
+
+rows = len(memory)
+cols = len(memory[0])
 
 # FIRST PART: Get the number of times 'XMAS' appears in any direction on the input text
 target = 'XMAS'
-rows = len(memory)
-cols = len(memory[0])
 result = 0
 directions = [
     (0, 1),  # Right
@@ -31,7 +30,7 @@ directions = [
     (-1, 1)  # Up-right
 ]
 
-def check_direction(x, y, dx, dy):
+def check_direction(x: int, y: int, dx: int, dy: int):
     for i in range(len(target)):
         nx, ny = x + i * dx, y + i * dy
         if nx < 0 or ny < 0 or nx >= rows or ny >= cols or memory[nx][ny] != target[i]:
@@ -45,3 +44,18 @@ for row in range(rows):
                 result += 1
 
 print("\n\033[37mThe number of 'XMAS' is:\033[0m\033[1m", result)
+
+# SECOND PART: Get the number of times 'MAS' appears as an X
+mas_result = 0
+
+for i in range(1, rows - 1):
+    for j in range(1, cols - 1):
+        if memory[i][j] != 'A':
+            continue
+        if not (memory[i - 1][j - 1], memory[i + 1][j + 1]) in (('M', 'S'), ('S', 'M')):
+            continue
+        if not (memory[i + 1][j - 1], memory[i - 1][j + 1]) in (('M', 'S'), ('S', 'M')):
+            continue
+        mas_result += 1
+
+print("\n\033[0m\033[37mThe number of 'X-MAS' is:\033[0m\033[1m", mas_result)
