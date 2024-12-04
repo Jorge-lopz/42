@@ -45,7 +45,7 @@ for row in range(rows):
 
 print("\n\033[37mThe number of 'XMAS' is:\033[0m\033[1m", result)
 
-# SECOND PART: Get the number of times 'MAS' appears in an X-form
+# SECOND PART: Get the number of times 'MAS' appears in an X-format
 mas_result = 0
 
 for i in range(1, rows - 1):
