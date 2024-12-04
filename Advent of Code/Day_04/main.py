@@ -20,7 +20,6 @@ target = 'XMAS'
 rows = len(memory)
 cols = len(memory[0])
 result = 0
-
 directions = [
     (0, 1),  # Right
     (0, -1),  # Left
@@ -32,7 +31,6 @@ directions = [
     (-1, 1)  # Up-right
 ]
 
-# Function to check for "XMAS" in a specific direction
 def check_direction(x, y, dx, dy):
     for i in range(len(target)):
         nx, ny = x + i * dx, y + i * dy
@@ -40,11 +38,10 @@ def check_direction(x, y, dx, dy):
             return False
     return True
 
-# Search the grid
-for x in range(rows):
-    for y in range(cols):
+for row in range(rows):
+    for col in range(cols):
         for dx, dy in directions:
-            if check_direction(x, y, dx, dy):
+            if check_direction(row, col, dx, dy):
                 result += 1
 
 print("\n\033[37mThe number of 'XMAS' is:\033[0m\033[1m", result)
