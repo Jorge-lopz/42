@@ -17,9 +17,9 @@ with open('input.txt', 'r') as file:
 
 # FIRST PART: Get the number of times 'XMAS' appears in any direction on the input text
 target = 'XMAS'
+rows = len(memory)
+cols = len(memory[0])
 result = 0
-rows = len(grid)
-cols = len(grid[0])
 
 directions = [
     (0, 1),  # Right
