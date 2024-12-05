@@ -19,82 +19,82 @@ char	*free_mem(char **str)
 	return (NULL);
 }
 
-char	*clean_storage(char *storage)
+char	*remove_last(char *buffer)
 {
-	char	*new_storage;
+	char	*new_buffer;
 	char	*ptr;
 	int		len;
 
-	ptr = ft_strchr(storage, '\n');
+	ptr = ft_strchr(buffer, '\n');
 	if (!ptr)
 	{
-		new_storage = NULL;
-		return (free_mem(&storage));
+		new_buffer = NULL;
+		return (free_mem(&buffer));
 	}
 	else
-		len = (ptr - storage) + 1;
-	if (!storage[len])
-		return (free_mem(&storage));
-	new_storage = ft_substr(storage, len, ft_strlen(storage) - len);
-	free_mem(&storage);
-	if (!new_storage)
+		len = (ptr - buffer) + 1;
+	if (!buffer[len])
+		return (free_mem(&buffer));
+	new_buffer = ft_substr(buffer, len, ft_strlen(buffer) - len);
+	free_mem(&buffer);
+	if (!new_buffer)
 		return (NULL);
-	return (new_storage);
+	return (new_buffer);
 }
 
-char	*new_line(char *storage)
+char	*select_next(char *buffer)
 {
 	char	*line;
 	char	*ptr;
 	int		len;
 
-	ptr = ft_strchr(storage, '\n');
-	len = (ptr - storage) + 1;
-	line = ft_substr(storage, 0, len);
+	ptr = ft_strchr(buffer, '\n');
+	len = (ptr - buffer) + 1;
+	line = ft_substr(buffer, 0, len);
 	if (!line)
 		return (NULL);
 	return (line);
 }
 
-char	*readbuf(int fd, char *storage)
+char	*read_next(int fd, char *buffer)
 {
 	int		rid;
-	char	*buffer;
+	char	*temp_buffer;
 
 	rid = 1;
-	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buffer)
-		return (free_mem(&storage));
-	buffer[0] = '\0';
-	while (rid > 0 && !ft_strchr(buffer, '\n'))
+	temp_buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!temp_buffer)
+		return (free_mem(&buffer));
+	temp_buffer[0] = '\0';
+	while (rid > 0 && !ft_strchr(temp_buffer, '\n'))
 	{
-		rid = read(fd, buffer, BUFFER_SIZE);
+		rid = read(fd, temp_buffer, BUFFER_SIZE);
 		if (rid > 0)
 		{
-			buffer[rid] = '\0';
-			storage = ft_strjoin(storage, buffer);
+			temp_buffer[rid] = '\0';
+			buffer = ft_strjoin(buffer, temp_buffer);
 		}
 	}
-	free(buffer);
+	free(temp_buffer);
 	if (rid == -1)
-		return (free_mem(&storage));
-	return (storage);
+		return (free_mem(&buffer));
+	return (buffer);
 }
 
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*storage;
+	static char	*buffer;
 
 	if (fd < 0)
 		return (NULL);
-	if ((storage && !ft_strchr(storage, '\n')) || !storage)
-		storage = readbuf(fd, storage);
-	if (!storage)
+	if ((buffer && !ft_strchr(buffer, '\n')) || !buffer)
+		buffer = read_next(fd, buffer);
+	if (!buffer)
 		return (NULL);
-	line = new_line(storage);
+	line = select_next(buffer);
 	if (!line)
-		return (free_mem(&storage));
-	storage = clean_storage(storage);
+		return (free_mem(&buffer));
+	buffer = remove_last(buffer);
 	return (line);
 }
