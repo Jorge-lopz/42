@@ -1,4 +1,6 @@
-## ![Icon](https://github.com/Jorge-lopz/42/blob/main/42.svg)
+<div align=center>
+<img src="https://github.com/Jorge-lopz/42/blob/main/42.svg" width=200>
+</div>
 
 # My 42 Projects Repository
 
