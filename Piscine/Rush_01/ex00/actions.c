@@ -12,11 +12,11 @@
 
 extern int	g_matrix[4][4];
 
-void	print_matrix(void);
+void		print_matrix(void);
 
-int		is_valid(int row, int col, int num);
+int			is_valid(int row, int col, int num);
 
-int		check_visibility(int *borders, int row, int col);
+int			check_visibility(int *borders, int row, int col);
 
 void	place_definitive_1234(int blocked[4][4], int row, int col, int i)
 {
@@ -77,8 +77,8 @@ int	solve(int blocked_matrix[4][4], int row, int col, int *borders)
 		return (1);
 	if (col == 4)
 		return (solve(blocked_matrix, row + 1, 0, borders));
-	if (blocked_matrix[row][col] == 1
-		&& check_visibility(borders, row, col) == 1)
+	if (blocked_matrix[row][col] == 1 && check_visibility(borders, row,
+			col) == 1)
 		return (solve(blocked_matrix, row, col + 1, borders));
 	num = 1;
 	while (num <= 4)

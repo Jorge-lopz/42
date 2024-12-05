@@ -12,7 +12,7 @@
 
 #include <unistd.h>
 
-int	g_matrix[4][4] = {{0}};
+int		g_matrix[4][4] = {{0}};
 
 void	print_error(void);
 

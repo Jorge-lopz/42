@@ -72,8 +72,8 @@ int	check_visibility(int *borders, int row, int col)
 		i = -1;
 		while (i++ < 3)
 			line[i] = g_matrix[i][col];
-		if (visibility_count(line, 0) != borders[col]
-			|| visibility_count(line, 1) != borders[4 + col])
+		if (visibility_count(line, 0) != borders[col] || visibility_count(line,
+				1) != borders[4 + col])
 			return (0);
 	}
 	return (1);

@@ -21,7 +21,7 @@ int	main(void)
 	int		fd;
 	char	*line;
 
-	fd = open("empty.txt", O_RDONLY);
+	fd = open("text.txt", O_RDONLY);
 	if (fd == -1)
 	{
 		perror("Error opening file");
