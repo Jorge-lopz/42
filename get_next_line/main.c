@@ -19,27 +19,22 @@
 int	main(void)
 {
 	int		fd;
-	char	*buffer;
 	char	*line;
 
-	buffer = NULL;
 	fd = open("text.txt", O_RDONLY);
 	if (fd == -1)
 	{
 		perror("Error opening file");
 		return (1);
 	}
-	while ((line = read_next(fd, buffer)) != NULL)
+	while ((line = get_next_line(fd)) != NULL)
 	{
-		printf("Line: %s\n", line);
-		if (line != buffer)
+		if (line)
 		{
-			free(buffer);
-			buffer = line;
+			printf("Line: %s", line);
+			free(line);
 		}
 	}
 	close(fd);
-	if (buffer)
-		free(buffer);
 	return (0);
 }
