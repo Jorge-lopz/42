@@ -6,8 +6,8 @@
 #                                              +#++:++#++: +#+                #
 #                                             +#+     +#+ +#+                 #
 #     AUTHOR: Jorge Lopez Puebla             ##+     #+# #+#    #+#           #
-#     LAST UPDATE: 05/12/2024               ###     ###  ########             #5391
-#                                                                             #6142
+#     LAST UPDATE: 05/12/2024               ###     ###  ########             #
+#                                                                             #
 # --------------------------------------------------------------------------- #
 
 memory: [str]
@@ -57,12 +57,15 @@ valid_updates = []
 incorrect_updates = []
 
 for update in updates:
+    is_valid = True
     positions = {page: idx for idx, page in enumerate(update)}
     for x, y in rules:
         if x in positions and y in positions and positions[x] > positions[y]:
             incorrect_updates.append(update)
+            is_valid = False
             break
-    valid_updates.append(update[len(update) // 2])
+    if is_valid:
+        valid_updates.append(update[len(update) // 2])
 
 sum_correct_middle = sum(valid_updates)
 print("\n\033[37mThe sum of valid updates is:\033[0m\033[1m", sum_correct_middle)
