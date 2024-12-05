@@ -8,7 +8,7 @@ This repo contains a collection of all 42 projects.
 
 ### Projects
 
-- **[Libft](https://github.com/Jorge-lopz/42/tree/main/libft)** &nbsp;&nbsp;&nbsp;<img src="https://wakatime.com/badge/user/43299b95-37b5-4319-89dd-7bbef7fb1dcb/project/df9d3b5f-33e7-4199-9b15-4235b40e79c3.svg" width=140>
+- **[Libft](https://github.com/Jorge-lopz/42/tree/main/Libft)** &nbsp;&nbsp;&nbsp;<img src="https://wakatime.com/badge/user/43299b95-37b5-4319-89dd-7bbef7fb1dcb/project/df9d3b5f-33e7-4199-9b15-4235b40e79c3.svg" width=140>
 
 - **[Printf](https://github.com/Jorge-lopz/42/tree/main/printf)** &nbsp;&nbsp;&nbsp;<img src="https://wakatime.com/badge/user/43299b95-37b5-4319-89dd-7bbef7fb1dcb/project/91656e0a-dfca-4783-b9d9-72678f17ab59.svg" width=140>
 
