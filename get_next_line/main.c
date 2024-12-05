@@ -21,19 +21,21 @@ int	main(void)
 	int		fd;
 	char	*line;
 
-	fd = open("text.txt", O_RDONLY);
+	fd = open("empty.txt", O_RDONLY);
 	if (fd == -1)
 	{
 		perror("Error opening file");
 		return (1);
 	}
-	while ((line = get_next_line(fd)) != NULL)
+	line = get_next_line(fd);
+	while (line != NULL)
 	{
 		if (line)
 		{
 			printf("Line: %s", line);
 			free(line);
 		}
+		line = get_next_line(fd);
 	}
 	close(fd);
 	return (0);
