@@ -20,6 +20,7 @@ int	main(void)
 {
 	int		fd;
 	char	*line;
+	int		i;
 
 	fd = open("text.txt", O_RDONLY);
 	if (fd == -1)
@@ -27,15 +28,15 @@ int	main(void)
 		perror("Error opening file");
 		return (1);
 	}
+	i = 1;
 	line = get_next_line(fd);
+	printf("Line %d: %s", i, line);
 	while (line != NULL)
 	{
-		if (line)
-		{
-			printf("Line: %s", line);
-			free(line);
-		}
+		free(line);
 		line = get_next_line(fd);
+		printf("Line %d: %s", i, line);
+		i++;
 	}
 	close(fd);
 	return (0);
