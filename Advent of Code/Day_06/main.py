@@ -77,4 +77,5 @@ def find_valid_obstructions(memory, guard, orientation):
 
 # Find and print results
 valid_obstructions = find_valid_obstructions(memory, guard, orientation)
-print("\n\033[0m\033[37mThe number of valid obstruction positions is:\033[0m\033[1m", len(valid_obstructions))
+print("\nThe number of valid obstruction positions is:", len(valid_obstructions))
+print("Positions are:", valid_obstructions)
