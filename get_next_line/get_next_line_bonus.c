@@ -84,17 +84,17 @@ char	*read_next(int fd, char *buffer)
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*buffer;
+	static char	*buffer[1024];
 
 	if (fd < 0)
 		return (NULL);
-	if ((buffer && !ft_strchr(buffer, '\n')) || !buffer)
-		buffer = read_next(fd, buffer);
-	if (!buffer)
+	if ((buffer[fd] && !ft_strchr(buffer[fd], '\n')) || !buffer[fd])
+		buffer[fd] = read_next(fd, buffer[fd]);
+	if (!buffer[fd])
 		return (NULL);
-	line = select_next(buffer);
+	line = select_next(buffer[fd]);
 	if (!line)
-		return (free_mem(&buffer));
-	buffer = remove_last(buffer);
+		return (free_mem(&buffer[fd]));
+	buffer[fd] = remove_last(buffer[fd]);
 	return (line);
 }
