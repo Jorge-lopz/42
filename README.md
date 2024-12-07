@@ -14,7 +14,7 @@ This repo contains a collection of all 42 projects.
 
 - **[Get Next Line](https://github.com/Jorge-lopz/42/tree/main/get_next_line)** &nbsp;&nbsp;&nbsp;<img src="https://wakatime.com/badge/user/43299b95-37b5-4319-89dd-7bbef7fb1dcb/project/67cb765b-bb5c-423d-8d44-35cae21c7b59.svg" width=140>
 
-- **[Born2beRoot](https://github.com/Jorge-lopz/42/tree/main/born2beroot)** &nbsp;&nbsp;&nbsp;<img src="https://wakatime.com/badge/user/43299b95-37b5-4319-89dd-7bbef7fb1dcb/project/e99ad549-2920-4638-bd7a-b706bfd4eda6.svg" width=110>
+- **[Born2beRoot](https://github.com/Jorge-lopz/42/tree/main/born2beroot)**
 
 ### Extras
 
