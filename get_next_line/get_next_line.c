@@ -12,10 +12,10 @@
 
 #include "get_next_line.h"
 
-char	*free_mem(char *str)
+char	*free_mem(char **str)
 {
-	free(str);
-	str = NULL;
+	free(*str);
+	*str = NULL;
 	return (NULL);
 }
 
@@ -29,14 +29,14 @@ char	*remove_last(char *buffer)
 	if (!ptr)
 	{
 		new_buffer = NULL;
-		return (free_mem(buffer));
+		return (free_mem(&buffer));
 	}
 	else
 		len = (ptr - buffer) + 1;
 	if (!buffer[len])
-		return (free_mem(buffer));
+		return (free_mem(&buffer));
 	new_buffer = ft_substr(buffer, len, ft_strlen(buffer) - len);
-	free_mem(buffer);
+	free_mem(&buffer);
 	if (!new_buffer)
 		return (NULL);
 	return (new_buffer);
@@ -64,7 +64,7 @@ char	*read_next(int fd, char *buffer)
 	rid = 1;
 	temp_buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!temp_buffer)
-		return (free_mem(buffer));
+		return (free_mem(&buffer));
 	temp_buffer[0] = '\0';
 	while (rid > 0 && !ft_strchr(temp_buffer, '\n'))
 	{
@@ -77,7 +77,7 @@ char	*read_next(int fd, char *buffer)
 	}
 	free(temp_buffer);
 	if (rid == -1)
-		return (free_mem(buffer));
+		return (free_mem(&buffer));
 	return (buffer);
 }
 
@@ -94,7 +94,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	line = select_next(buffer);
 	if (!line)
-		return (free_mem(buffer));
+		return (free_mem(&buffer));
 	buffer = remove_last(buffer);
 	return (line);
 }
