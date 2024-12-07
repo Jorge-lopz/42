@@ -17,9 +17,23 @@ with open('input.txt', 'r') as file:
     for line in file.readlines():
         memory.append([int(line.split(': ')[0]), list(map(int, line.split(': ')[1].split(' ')))])
 
+def solve():
+    global total_possible
+    for operation in memory:
+        if len(operation[1]) == 1:
+            total_possible += operation[0]
+        else:
+            if sum(operation[1]) > operation[0]:  # If sum > result, so will the multiplication -> False
+                continue
+            elif sum(operation[1]) == operation[0]:  # If the sum is equal to the result
+                total_possible += operation[0]
+            else:
+                if test_operations(operation[0], operation[1], now=0):
+                    total_possible += operation[0]
+
 # FIRST PART: Find the possible operations adding just '+' or '✕' and sum their results
+
 total_possible = 0
-count_possible = 0
 
 def test_operations(result: int, numbers: [int], now: int):
     if not numbers:
@@ -35,25 +49,14 @@ def test_operations(result: int, numbers: [int], now: int):
             test_operations(result, remaining, now * num if now != 0 else num)
     )
 
-for operation in memory:
-    if len(operation[1]) == 1:
-        total_possible += operation[0]
-        count_possible += 1
-    else:
-        if sum(operation[1]) > operation[0]:  # If the sum is bigger than the result so will the multiplication -> False
-            continue
-        elif sum(operation[1]) == operation[0]:  # If the sum is equal to the result
-            total_possible += operation[0]
-            count_possible += 1
-        else:
-            if test_operations(operation[0], operation[1], now=0):
-                total_possible += operation[0]
-                count_possible += 1
+solve()
 
 print("\n\033[37mThe total possible sum is:\033[0m\033[1m", total_possible)
 
 # SECOND PART: Find the possible operations adding just '+', '✕' or '||' (concatenator) and sum their results
 
+total_possible = 0
+
 def test_operations(result: int, numbers: [int], now: int):
     if not numbers:
         return now == result
@@ -65,6 +68,10 @@ def test_operations(result: int, numbers: [int], now: int):
     # Try both sum and multiplication
     return (
             test_operations(result, remaining, now + num) or
-            test_operations(result, remaining, int("".join(now, num))) or
-            test_operations(result, remaining, now * num if now != 0 else num)
+            test_operations(result, remaining, now * num if now != 0 else num) or
+            test_operations(result, remaining, int(f"{now}{num}") if now != 0 else num)
     )
+
+solve()
+
+print("\n\033[37mThe total possible sum (with concatenation) is:\033[0m\033[1m", total_possible)
