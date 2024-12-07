@@ -1,81 +1,175 @@
-memory: [[str]] = []
+import numpy as np
 
-# Read input file
-with open('input.txt', 'r') as file:
-    for line in file.readlines():
-        memory.append([char for char in line.strip()])
+FILENAME = "/Users/blackbox/Desktop/advent6"
 
-# Constants
-GUARD_CHARS = ['^', '>', 'v', '<']
-DIRECTIONS = {'^': (-1, 0), '>': (0, 1), 'v': (1, 0), '<': (0, -1)}
+def load_data(FILENAME):
+    f = open(FILENAME)
+    strings = []
+    for line in f:
+        strings.append(line.rstrip())
+    f.close()
+    return strings
 
-# Find guard's starting position and orientation
-def get_guard():
-    for row, line in enumerate(memory):
-        for col, char in enumerate(line):
-            if char in GUARD_CHARS:
-                return [row, col], char
+def get_game_map(strings):
+    game_pieces = {".": 0, "#": 2, "^": 3, "<": 4, ">": 5, "v": 6, "X": 7}
+    guard_pieces = ["^", "<", ">", "v"]
+    guard_piece = 3
+    guard_position = [0, 0]
+    rows = len(strings)
+    columns = len(strings[0])
+    game_map = np.zeros((rows, columns), dtype=int)
+    for r, string in enumerate(strings):
+        for c, char in enumerate(string):
 
-guard, orientation = get_guard()
+            # COMPLETE THE MAP
+            if char == ".":
+                pass
+            else:
+                game_map[r, c] = game_pieces[char]
 
-# Find all possible obstruction positions
-def find_obstruction_positions(memory, guard):
-    positions = []
-    for row in range(len(memory)):
-        for col in range(len(memory[0])):
-            if memory[row][col] == '.' and [row, col] != guard:
-                positions.append((row, col))
-    return positions
+            # ID GUARD PIECE AND LOCATION
+            if char in guard_pieces:
+                guard_piece = char
+                guard_position = [r, c]
+    return game_map, game_pieces, guard_piece, guard_position
 
-# Simulate the guard's movement
-def simulate_guard(memory, guard, orientation):
-    visited = set()
-    guard_pos = guard[:]
-    memory_copy = [row[:] for row in memory]
+def walk_path(game_map, game_pieces, guard_piece, guard_position):
+    end_game = 0
+    row = guard_position[0]
+    column = guard_position[1]
+    game_map[row, column] = game_pieces['X']
 
-    while True:
-        state = (tuple(guard_pos), orientation)
-        if state in visited:
-            return True  # Loop detected
-        visited.add(state)
+    ###### "^" ######
+    if guard_piece == "^":
+        next_move = row - 1
+        piece_ahead = game_map[next_move, column]
+        while (piece_ahead != game_pieces["#"]) or (next_move < 0):
+            game_map[next_move, column] = game_pieces['X']
+            row = next_move
+            guard_position = [row, column]
+            next_move = row - 1
+            if (next_move < 0):
+                end_game = 1
+                break
+            else:
+                piece_ahead = game_map[next_move, column]
+        guard_piece = ">"
+        guard_position = [row, column]
+        wall = [next_move, column]
+        return game_map, guard_piece, guard_position, end_game, wall
 
-        # Move guard based on orientation
-        dx, dy = DIRECTIONS[orientation]
-        next_pos = [guard_pos[0] + dx, guard_pos[1] + dy]
+    ###### ">" ######
+    if guard_piece == ">":
+        next_move = column + 1
+        piece_ahead = game_map[row, next_move]
+        while (piece_ahead != game_pieces["#"]) or (next_move > game_map.shape[0] - 1):
+            game_map[row, next_move] = game_pieces['X']
+            column = next_move
+            guard_position = [row, column]
+            next_move = column + 1
+            if (next_move > game_map.shape[0] - 1):
+                end_game = 1
+                break
+            else:
+                piece_ahead = game_map[row, next_move]
+        guard_piece = "v"
+        guard_position = [row, column]
+        wall = [row, next_move]
+        return game_map, guard_piece, guard_position, end_game, wall
 
-        # Check if the next position is valid
-        if (
-                0 <= next_pos[0] < len(memory_copy)
-                and 0 <= next_pos[1] < len(memory_copy[0])
-                and memory_copy[next_pos[0]][next_pos[1]] in 'X.'
-        ):
-            guard_pos = next_pos
-        else:
-            # Change orientation
-            orientation = {'^': '>', '>': 'v', 'v': '<', '<': '^'}[orientation]
+    ###### "v" ######
+    if guard_piece == "v":
+        next_move = row + 1
+        piece_ahead = game_map[next_move, column]
+        while (piece_ahead != game_pieces["#"]) or (next_move > game_map.shape[0] - 1):
+            game_map[next_move, column] = game_pieces['X']
+            row = next_move
+            guard_position = [row, column]
+            next_move = row + 1
+            if (next_move > game_map.shape[0] - 1):
+                end_game = 1
+                break
+            else:
+                piece_ahead = game_map[next_move, column]
+        guard_piece = "<"
+        guard_position = [row, column]
+        wall = [next_move, column]
 
-        # If guard moves outside bounds, stop simulation
-        if not (0 <= guard_pos[0] < len(memory_copy) and 0 <= guard_pos[1] < len(memory_copy[0])):
-            break
+        return game_map, guard_piece, guard_position, end_game, wall
 
-    return False  # No loop detected
+    ###### "<" ######
+    if guard_piece == "<":
+        next_move = column - 1
+        piece_ahead = game_map[row, next_move]
+        while (piece_ahead != game_pieces["#"]) or (next_move < 0):
+            game_map[row, next_move] = game_pieces['X']
+            column = next_move
+            guard_position = [row, column]
+            next_move = column - 1
+            if (next_move < 0):
+                end_game = 1
+                break
+            else:
+                piece_ahead = game_map[row, next_move]
+        guard_piece = "^"
+        guard_position = [row, column]
+        wall = [row, next_move]
 
-# Main logic to find valid obstructions
-def find_valid_obstructions(memory, guard, orientation):
-    valid_positions = []
-    possible_positions = find_obstruction_positions(memory, guard)
+        return game_map, guard_piece, guard_position, end_game, wall
 
-    for pos in possible_positions:
-        # Place obstruction
-        memory[pos[0]][pos[1]] = '#'
-        if simulate_guard(memory, guard, orientation):
-            valid_positions.append(pos)
-        # Remove obstruction
-        memory[pos[0]][pos[1]] = '.'
+data = load_data(FILENAME)
+game_map, game_pieces, guard_piece, guard_position = get_game_map(data)
+end_game = 0
+while not end_game:
+    game_map, guard_piece, guard_position, end_game, wall = walk_path(game_map, game_pieces, guard_piece,
+                                                                      guard_position)
 
-    return valid_positions
+count = 0
+for row in range(game_map.shape[0]):
+    for column in range(game_map.shape[1]):
+        if game_map[row, column] == 7:
+            count += 1
 
-# Find and print results
-valid_obstructions = find_valid_obstructions(memory, guard, orientation)
-print("\nThe number of valid obstruction positions is:", len(valid_obstructions))
-print("Positions are:", valid_obstructions)
+print("Part 1:", count)
+
+data = load_data(FILENAME)
+game_map, game_pieces, guard_piece, guard_position = get_game_map(data)
+end_game = 0
+game_map_copy = game_map.copy()
+guard_position_copy = guard_position
+
+end_game_value = 0
+for row in range(game_map.shape[0]):
+    for column in range(game_map.shape[1]):
+
+        # The new obstruction can't be placed at the guard's starting position
+        if ((guard_position_copy[0] == row) and (guard_position_copy[1] == column)):
+            continue
+
+        # set up the game
+        if (game_map_copy[row, column] == 0):
+            game_map_copy[row, column] = game_pieces["#"]
+
+        n = 0
+
+        while not end_game:
+
+            game_map_copy, guard_piece, guard_position_copy, end_game, wall = walk_path(game_map_copy,
+                                                                                        game_pieces,
+                                                                                        guard_piece,
+                                                                                        guard_position_copy)
+            if end_game == 1:
+                end_game_value += 1
+
+            if n == game_map_copy.shape[0] * 2:
+                break
+            else:
+                n += 1
+
+        # reset game
+        game_map_copy = game_map.copy()
+        guard_position_copy = guard_position
+        guard_piece = "^"
+        end_game = 0
+
+print("Part 2:", game_map_copy.shape[0] * game_map_copy.shape[1] - end_game_value - 1)
