@@ -17,7 +17,7 @@ with open('input.txt', 'r') as file:
     for line in file.readlines():
         memory.append([int(line.split(': ')[0]), list(map(int, line.split(': ')[1].split(' ')))])
 
-def solve():
+def solve(test_operations):
     global total_possible
     for operation in memory:
         if len(operation[1]) == 1:
@@ -49,7 +49,7 @@ def test_operations(result: int, numbers: [int], now: int):
             test_operations(result, remaining, now * num if now != 0 else num)
     )
 
-solve()
+solve(test_operations)
 
 print("\n\033[37mThe total possible sum is:\033[0m\033[1m", total_possible)
 
@@ -72,6 +72,6 @@ def test_operations(result: int, numbers: [int], now: int):
             test_operations(result, remaining, int(f"{now}{num}") if now != 0 else num)
     )
 
-solve()
+solve(test_operations)
 
 print("\n\033[37mThe total possible sum (with concatenation) is:\033[0m\033[1m", total_possible)
