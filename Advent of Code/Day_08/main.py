@@ -51,9 +51,9 @@ for freq, positions in antennas.items():
                 continue
             vx, vy = other_antenna[0] - antenna[0], other_antenna[1] - antenna[1]
             x, y = antenna[0], antenna[1]
-            while 0 <= x < len(memory) and 0 <= y < len(memory[0]):
+            while 0 <= x + vx < len(memory) and 0 <= y + vy < len(memory[0]):
                 x, y = x + vx, y + vy
                 harmonics_antinodes.add((x, y))
-                # print(f"Antinode: {antinode} <- {antenna} {other_antenna}")
+                # print(f"Antinode: [{x}, {y}] <- {antenna} {other_antenna}")
 
 print("\n\033[0m\033[37mThe number of (infinitely repeating) antinodes is:\033[0m\033[1m", len(harmonics_antinodes))
