@@ -20,7 +20,7 @@ with open('input.txt', 'r') as file:
         for col, char in enumerate(line.strip()):
             line_chars.append(char)
             if char.isdigit() or char.isupper() or char.islower():
-                antennas.setdefault(char, []).append([row, col])  # Simplified dictionary update
+                antennas.setdefault(char, []).append([row, col])
         memory.append(line_chars)
 
 # FIRST PART: Count the number of antinodes
