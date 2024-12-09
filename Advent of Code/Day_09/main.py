@@ -37,7 +37,7 @@ while first_dot_index < last_non_dot_index:
 print('\n\033[37mThe checksum after compression is:\033[0m\033[1m',
       sum(int(char) * i if char != '.' else 0 for i, char in enumerate(disk)))
 
-# SECOND PART: Similar to the first part but only moving whole files together
+# SECOND PART: Similar to the first part but only moving whole files together (using imaginary numbers like "tuples")
 disk = [memory[i - 2] + (1 - i % 2) * i * .5j for i in range(2, len(memory) + 2)]
 
 left, right = 1, len(disk) - 1
