@@ -47,11 +47,11 @@ while first_dot_index < last_non_dot_index:
 print('\n\033[37mThe checksum is:\033[0m\033[1m', get_checksum(disk))
 """
 # SECOND PART: Similar to the first part but only moving whole files together
-get_disk()
 # 15846256445880 too high
 # 6373055193464 is right
 
 """
+get_disk()
 file_sizes = {i: memory[i * 2 + 1] for i in range(len(memory) // 2)}
 
 for file in reversed(file_sizes.keys()):
@@ -76,32 +76,30 @@ def compute_checksum(files):
             pos += 1
     return int(checksum)
 
-data1 = [memory[i - 2] + (1 - i % 2) * i * .5j for i in range(2, len(memory) + 2)]
-data2 = data1.copy()
+disk = [memory[i - 2] + (1 - i % 2) * i * .5j for i in range(2, len(memory) + 2)]
 
-def part2():
-    l, r = 1, len(data2) - 1
+l, r = 1, len(disk) - 1
 
-    while r > 0:
-        l = 1
+while r > 0:
+    l = 1
 
-        # Find the next file from the right
-        while data2[r].imag == 0:
-            r -= 1
-
-        # Find the first free space, where the entire file can fit
-        while l < len(data2) and not (data2[l].imag == 0 and data2[l].real >= data2[r].real):
-            l += 1
-
-        if l < len(data2) and l < r:
-            # Switch the file with the free space
-            data2[l] -= data2[r].real
-            data2[r - 1] += data2[r].real  # In this part, free space preservation is necessary!
-            data2.insert(l, data2.pop(r))
-
+    # Find the next file from the right
+    while disk[r].imag == 0:
         r -= 1
 
-    return compute_checksum(data2)
+    # Find the first free space, where the entire file can fit
+    while l < len(disk) and not (disk[l].imag == 0 and disk[l].real >= disk[r].real):
+        l += 1
+
+    if l < len(disk) and l < r:
+        # Switch the file with the free space
+        disk[l] -= disk[r].real
+        disk[r - 1] += disk[r].real  # In this part, free space preservation is necessary!
+        disk.insert(l, disk.pop(r))
+
+    r -= 1
+
+print(disk)
 
 print('\n\033[0m\033[37mThe checksum (without fragmentation) is:\033[0m\033[1m', get_checksum(disk))
-print('\n\033[0m\033[37mThe checksum (without fragmentation) is:\033[0m\033[1m', part2())
+print('\n\033[0m\033[37mThe checksum (without fragmentation) is:\033[0m\033[1m', compute_checksum(disk))
