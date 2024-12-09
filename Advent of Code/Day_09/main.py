@@ -34,7 +34,7 @@ while first_dot_index < last_non_dot_index:
     first_dot_index = disk.index('.')
     last_non_dot_index -= 1
 
-print('\n\033[37mThe checksum is:\033[0m\033[1m',
+print('\n\033[37mThe checksum after compression is:\033[0m\033[1m',
       sum(int(char) * i if char != '.' else 0 for i, char in enumerate(disk)))
 
 # SECOND PART: Similar to the first part but only moving whole files together
@@ -64,4 +64,4 @@ for n in disk:
             checksum += pos * (n.imag - 1)
         pos += 1
 
-print('\n\033[0m\033[37mThe checksum (without fragmentation) is:\033[0m\033[1m', int(checksum))
+print('\n\033[0m\033[37mThe checksum after compression (without fragmentation) is:\033[0m\033[1m', int(checksum))
