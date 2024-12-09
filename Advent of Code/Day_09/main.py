@@ -14,7 +14,6 @@
 with open('input.txt', 'r') as file:
     memory = list(map(int, file.read().strip()))
 
-"""
 # FIRST PART: Sort the disk visual representation to leave all the free space at the end and compress the 'files'
 j = 0
 disk = []
@@ -35,11 +34,10 @@ while first_dot_index < last_non_dot_index:
     first_dot_index = disk.index('.')
     last_non_dot_index -= 1
 
-print('\n\033[37mThe checksum is:\033[0m\033[1m', 
-    sum(int(char) * i if char != '.' else 0 for i, char in enumerate(disk)))
-"""
+print('\n\033[37mThe checksum is:\033[0m\033[1m',
+      sum(int(char) * i if char != '.' else 0 for i, char in enumerate(disk)))
+
 # SECOND PART: Similar to the first part but only moving whole files together
-# 6373055193464 is right
 disk = [memory[i - 2] + (1 - i % 2) * i * .5j for i in range(2, len(memory) + 2)]
 
 left, right = 1, len(disk) - 1
@@ -66,4 +64,4 @@ for n in disk:
             checksum += pos * (n.imag - 1)
         pos += 1
 
-print('\n\033[0m\033[37mThe checksum (without fragmentation) is:\033[0m\033[1m', checksum)
+print('\n\033[0m\033[37mThe checksum (without fragmentation) is:\033[0m\033[1m', int(checksum))
