@@ -49,12 +49,13 @@ print('\n\033[37mThe checksum is:\033[0m\033[1m', get_checksum(disk))
 # SECOND PART: Similar to the first part but only moving whole files together
 get_disk()
 # 15846256445880 too high
-#
+# 6373055193464 is right
+
+"""
 file_sizes = {i: memory[i * 2 + 1] for i in range(len(memory) // 2)}
-print(file_sizes)
 
 for file in reversed(file_sizes.keys()):
-    for i in range(len(disk)):
+    for i in range(disk.index(str(file))):
         i_temp = 0
         while i + i_temp < disk.index(str(file)) and disk[i + i_temp] == '.':
             i_temp += 1
@@ -64,5 +65,43 @@ for file in reversed(file_sizes.keys()):
             disk = [char for char in ''.join(disk).replace(str(file), '.' * len(str(file)))]
             disk[i:i + i_temp] = [str(file)] * file_sizes.get(file) + ['.'] * (i_temp - file_sizes.get(file))
             break
+"""
+
+def compute_checksum(files):
+    pos = checksum = 0
+    for n in files:
+        for _ in range(int(n.real)):
+            if n.imag != 0:
+                checksum += pos * (n.imag - 1)
+            pos += 1
+    return int(checksum)
+
+data1 = [memory[i - 2] + (1 - i % 2) * i * .5j for i in range(2, len(memory) + 2)]
+data2 = data1.copy()
+
+def part2():
+    l, r = 1, len(data2) - 1
+
+    while r > 0:
+        l = 1
+
+        # Find the next file from the right
+        while data2[r].imag == 0:
+            r -= 1
+
+        # Find the first free space, where the entire file can fit
+        while l < len(data2) and not (data2[l].imag == 0 and data2[l].real >= data2[r].real):
+            l += 1
+
+        if l < len(data2) and l < r:
+            # Switch the file with the free space
+            data2[l] -= data2[r].real
+            data2[r - 1] += data2[r].real  # In this part, free space preservation is necessary!
+            data2.insert(l, data2.pop(r))
+
+        r -= 1
+
+    return compute_checksum(data2)
 
 print('\n\033[0m\033[37mThe checksum (without fragmentation) is:\033[0m\033[1m', get_checksum(disk))
+print('\n\033[0m\033[37mThe checksum (without fragmentation) is:\033[0m\033[1m', part2())
