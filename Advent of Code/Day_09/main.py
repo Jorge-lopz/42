@@ -31,6 +31,7 @@ def get_disk():
 def get_checksum(disk: list):
     return sum(int(char) * i if char != '.' else 0 for i, char in enumerate(disk))
 
+"""
 # FIRST PART: Sort the disk visual representation to leave all the free space at the end and compress the 'files'
 get_disk()
 
@@ -42,13 +43,26 @@ while first_dot_index < last_non_dot_index:
     disk[first_dot_index], disk[last_non_dot_index] = disk[last_non_dot_index], '.'
     first_dot_index = disk.index('.')
     last_non_dot_index -= 1
-    # print(''.join(disk))
 
 print('\n\033[37mThe checksum is:\033[0m\033[1m', get_checksum(disk))
-
-# SECOND PART:
+"""
+# SECOND PART: Similar to the first part but only moving whole files together
 get_disk()
+# 15846256445880 too high
+#
+file_sizes = {i: memory[i * 2 + 1] for i in range(len(memory) // 2)}
+print(file_sizes)
 
-print('\n\033[37mThe checksum (without fragmentation) is:\033[0m\033[1m', get_checksum(disk))
+for file in reversed(file_sizes.keys()):
+    for i in range(len(disk)):
+        i_temp = 0
+        while i + i_temp < disk.index(str(file)) and disk[i + i_temp] == '.':
+            i_temp += 1
+        if i_temp == 0:
+            continue
+        if file_sizes.get(file) * len(str(file)) <= i_temp:
+            disk = [char for char in ''.join(disk).replace(str(file), '.' * len(str(file)))]
+            disk[i:i + i_temp] = [str(file)] * file_sizes.get(file) + ['.'] * (i_temp - file_sizes.get(file))
+            break
 
-# 2858
+print('\n\033[0m\033[37mThe checksum (without fragmentation) is:\033[0m\033[1m', get_checksum(disk))
