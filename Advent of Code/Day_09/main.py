@@ -101,5 +101,5 @@ while r > 0:
 
 print(disk)
 
-print('\n\033[0m\033[37mThe checksum (without fragmentation) is:\033[0m\033[1m', get_checksum(disk))
+# print('\n\033[0m\033[37mThe checksum (without fragmentation) is:\033[0m\033[1m', get_checksum(disk))
 print('\n\033[0m\033[37mThe checksum (without fragmentation) is:\033[0m\033[1m', compute_checksum(disk))
