@@ -10,6 +10,8 @@
 #                                                                             #
 # --------------------------------------------------------------------------- #
 
+# SRC: https://adventofcode.com/2024/day/4
+
 with open('input.txt', 'r') as file:
     memory: [[str]] = [list(line.strip()) for line in file.readlines()]
 

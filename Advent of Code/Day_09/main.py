@@ -10,6 +10,8 @@
 #                                                                             #
 # --------------------------------------------------------------------------- #
 
+# SRC: https://adventofcode.com/2024/day/9
+
 # Read input file
 with open('input.txt', 'r') as file:
     memory = list(map(int, file.read().strip()))

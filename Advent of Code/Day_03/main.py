@@ -10,6 +10,8 @@
 #                                                                             #
 # --------------------------------------------------------------------------- #
 
+# SRC: https://adventofcode.com/2024/day/3
+
 # IMPORTS
 import re  # -> Regular expressions
 
