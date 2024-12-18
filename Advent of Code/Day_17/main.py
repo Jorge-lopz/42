@@ -1,6 +1,5 @@
 from enum import Enum
 
-
 class RegistryDict(dict):
     def __getitem__(self, key):
         return super().__getitem__(key).value
@@ -10,7 +9,6 @@ class RegistryDict(dict):
             super().__getitem__(key).value = value
         else:
             super().__setitem__(key, value)
-
 
 class RegistryType(Enum):
     A = 4
@@ -23,7 +21,6 @@ class RegistryType(Enum):
     def __str__(self) -> str:
         return self.__repr__()
 
-
 class Registry:
     value: int
 
@@ -32,7 +29,6 @@ class Registry:
 
     def __repr__(self) -> str:
         return f"Registry({self.value})"
-
 
 class Opcode(Enum):
     ADV = 0  # division
@@ -43,7 +39,6 @@ class Opcode(Enum):
     OUT = 5  # modulo 8
     BDV = 6  # division
     CDV = 7  # division
-
 
 def parse(file_name: str) -> tuple[RegistryDict, list[int]]:
     registries = RegistryDict()
@@ -59,13 +54,11 @@ def parse(file_name: str) -> tuple[RegistryDict, list[int]]:
 
     return registries, program
 
-
 def combo(operand: int, registries: RegistryDict) -> int:
     if operand < 4:
         return operand
 
     return registries[RegistryType(operand)]
-
 
 def evaluate(registries, program):
     out = []
@@ -104,7 +97,7 @@ def evaluate(registries, program):
 
             case Opcode.BXC:
                 registries[RegistryType.B] = (
-                    registries[RegistryType.B] ^ registries[RegistryType.C]
+                        registries[RegistryType.B] ^ registries[RegistryType.C]
                 )
 
             case Opcode.OUT:
@@ -114,12 +107,10 @@ def evaluate(registries, program):
 
     return out
 
-
 def part_1() -> str:
     registries, program = parse(r"C:\Users\jlpen\Desktop\input.txt")
 
     return ",".join(map(str, evaluate(registries, program)))
-
 
 def part_2() -> int:
     registries, program = parse(r"C:\Users\jlpen\Desktop\input.txt")
@@ -130,8 +121,8 @@ def part_2() -> int:
 
         for num in candidates:
             # try all 3-bit combinations
-            for offset in range(2**3):
-                a = (2**3) * num + offset
+            for offset in range(2 ** 3):
+                a = (2 ** 3) * num + offset
                 registries[RegistryType.A] = a
 
                 if evaluate(registries, program) == program[-length:]:
