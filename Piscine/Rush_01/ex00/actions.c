@@ -83,6 +83,8 @@ int	solve(int blocked_matrix[4][4], int row, int col, int *borders)
 	num = 1;
 	while (num <= 4)
 	{
+		print_matrix();
+		write(1, "\n", 1);
 		if (is_valid(row, col, num))
 		{
 			g_matrix[row][col] = num;
