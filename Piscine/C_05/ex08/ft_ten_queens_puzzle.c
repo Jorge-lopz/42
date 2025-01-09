@@ -19,8 +19,8 @@ int	is_valid(int board[10], int row, int col)
 	i = 0;
 	while (i < row)
 	{
-		if (board[i] == col || board[i] - i == col - row
-			|| board[i] + i == col + row)
+		if (board[i] == col || board[i] - i == col - row || board[i] + i == col
+			+ row)
 			return (0);
 		i++;
 	}
@@ -73,11 +73,10 @@ int	ft_ten_queens_puzzle(void)
 	solve(board, 0, &count);
 	return (count);
 }
-/*
+
 #include <stdio.h>
 
 int	main(void)
 {
 	printf("%d", ft_ten_queens_puzzle());
 }
-*/
