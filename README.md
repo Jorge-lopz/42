@@ -2,7 +2,7 @@
   <img src="https://github.com/Jorge-lopz/42/blob/main/42.svg" width=250>
 </div>
 
-## My 42 Projects Repository &nbsp;<img src="https://visitor-badge.laobi.icu/badge?page_id=jorge-lopz.42">
+# My 42 Projects Repository &nbsp;<img src="https://visitor-badge.laobi.icu/badge?page_id=jorge-lopz.42">
 
 This repo contains a collection of all 42 projects.
 
@@ -20,4 +20,4 @@ This repo contains a collection of all 42 projects.
 
 - **[Piscine](https://github.com/Jorge-lopz/42/tree/main/Piscine)**
 
-- **[Advent of Code](https://github.com/Jorge-lopz/Advent-of-Code)**&nbsp;&nbsp; [{42 Ranking}](https://aoc.42barcelona.com/ranking/es) &nbsp;&nbsp;&nbsp;<img src="https://wakatime.com/badge/user/43299b95-37b5-4319-89dd-7bbef7fb1dcb/project/c77ce4ac-84ce-43b9-820f-53cdb6302e3b.svg" width=140>
+- **[Advent of Code](https://github.com/Jorge-lopz/Advent-of-Code)**
