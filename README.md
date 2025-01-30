@@ -2,7 +2,7 @@
   <img src="https://github.com/Jorge-lopz/42/blob/main/42.svg" width=250>
 </div>
 
-## My 42 Projects Repository
+## My 42 Projects Repository &nbsp;<img src="https://visitor-badge.laobi.icu/badge?page_id=jorge-lopz.42">
 
 This repo contains a collection of all 42 projects.
 
